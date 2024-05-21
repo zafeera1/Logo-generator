@@ -1,4 +1,3 @@
-
 const { Circle, Triangle, Square } = require('./shapes');
 const inquirer = require('inquirer');
 const fs = require('fs');
@@ -47,7 +46,12 @@ async function main() {
     shape.color = userInput.shapeColor;
     const svg = `<svg width="300" height="200">${shape.generateSVG()}<text x="150" y="180" fill="${userInput.textColor}" font-size="24" text-anchor="middle">${userInput.text}</text></svg>`;
 
-    const filePath = path.join(__dirname, './Examples', 'logo.svg');
+    const examplesDir = path.join(__dirname, 'Examples');
+    if (!fs.existsSync(examplesDir)) {
+      fs.mkdirSync(examplesDir);
+    }
+
+    const filePath = path.join(examplesDir, 'logo.svg');
     fs.writeFileSync(filePath, svg);
 
     console.log('Generated logo.svg');
@@ -57,3 +61,4 @@ async function main() {
 }
 
 main();
+
